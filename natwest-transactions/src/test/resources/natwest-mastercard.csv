@@ -1,0 +1,10 @@
+
+Date, Type, Description, Value, Balance, Account Name, Account Number
+
+
+
+08 Mar 2021,Purchase,"'IZ *The Old Farm",6.50,,"'J DOE","'111111******1111",
+10 Mar 2021,Payment,"'FASTER PAYMENT RECEIVED - THANK YOU",-250.00,,"'J DOE","'111111******1111",
+11 Mar 2021,Purchase,"'GARDEN CENTRE",17.51,,"'J DOE","'111111******1111",
+11 Mar 2021,Purchase,"'GARDEN CENTRE",4.80,,"'J DOE","'111111******1111",
+20 Apr 2021,,"'Balance as at 20 Apr 2021",,500.05,"'J DOE","'111111******1111"

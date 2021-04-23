@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+group 'com.danwalkerdev'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    jarlibs {
+        extendsFrom implementation
+    }
+}
+
+dependencies {
+    implementation project(':statement-api')
+    implementation 'com.opencsv:opencsv:5.4'
+    jarlibs 'com.opencsv:opencsv:5.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jar {
+    from {
+        configurations.jarlibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = 'INCLUDE'
+}
+
+test {
+    useJUnitPlatform()
+}
