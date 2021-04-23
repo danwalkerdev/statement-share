@@ -7,8 +7,9 @@ import com.danwalkerdev.statement.exception.StatementException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ParserHelper {
 
@@ -33,11 +34,9 @@ public class ParserHelper {
             return Files.list(path)
                     .filter(Files::isRegularFile)
                     .filter(file -> file.toString().contains(parser.identifier()))
-                    .map(parser::parse)
-                    .reduce(new ArrayList<>(), (target, intermediate) -> {
-                        target.addAll(intermediate);
-                        return target;
-                    });
+                    .flatMap(p -> parser.parse(p).stream())
+                    .sorted(Comparator.comparing(Transaction::getDate))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             throw new StatementException(e);
         }
