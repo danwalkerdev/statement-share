@@ -1,7 +1,8 @@
 package com.danwalkerdev.statement;
 
+import com.danwalkerdev.statement.api.StatementUtil;
 import com.danwalkerdev.statement.api.Transaction;
-import com.danwalkerdev.statement.api.Util;
+import com.danwalkerdev.statement.messaging.MessagingUtil;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,9 +22,10 @@ public class App {
         Path path = Paths.get(args[0]);
         List<Transaction> transactions = new ArrayList<>();
 
-        new Util().providers().forEachRemaining(parserProvider -> transactions.addAll(new ParserHelper(parserProvider.getBankParser(), path).doParse()));
+        // parse all transactions from all providers
+        new StatementUtil().providers().forEachRemaining(parserProvider -> transactions.addAll(new ParserHelper(parserProvider.getBankParser(), path).doParse()));
+        // send transactions via all provided messaging services
+        new MessagingUtil().providers().forEachRemaining(messagingProvider -> messagingProvider.getService().send(transactions.stream()));
 
-        // write to file, or store for sending
-        transactions.forEach(System.out::println);
     }
 }

@@ -2,4 +2,7 @@ rootProject.name = 'StatementShare'
 include 'statement-api'
 include 'statement-app'
 include 'natwest-transactions'
+include 'messaging-api'
+include 'email-messaging'
+include 'console-messaging'
 
