@@ -34,7 +34,7 @@ public class ParserHelper {
             return Files.list(path)
                     .filter(Files::isRegularFile)
                     .filter(file -> file.toString().contains(parser.identifier()))
-                    .flatMap(p -> parser.parse(p).stream())
+                    .flatMap(filePath -> parser.parse(filePath).stream())
                     .sorted(Comparator.comparing(Transaction::getDate))
                     .collect(Collectors.toList());
         } catch (IOException e) {
