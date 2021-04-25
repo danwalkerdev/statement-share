@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,9 +19,8 @@ class HtmlContentCreator {
     private static final String DATE = "\\{date}";
     private static final String BODY_CONTENT = "\\{list-content}";
 
-    <T> String make(Stream<T> stream) {
+    String make(Stream<String> stream) {
         String mainContent = stream
-                .map(Objects::toString)
                 .map(makeListElement())
                 .collect(Collectors.joining());
 

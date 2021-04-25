@@ -4,5 +4,5 @@ import java.util.stream.Stream;
 
 public interface MessageService {
 
-    <T> void send(Stream<T> stream);
+    void send(Stream<String> stream);
 }
