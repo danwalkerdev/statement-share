@@ -9,10 +9,23 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    jarlibs {
+        extendsFrom implementation
+    }
+}
+
 dependencies {
     implementation project(':messaging-api')
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jar {
+    from {
+        configurations.jarlibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = 'INCLUDE'
 }
 
 test {
