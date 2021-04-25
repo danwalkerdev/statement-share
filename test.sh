@@ -1,1 +1,0 @@
-java -cp "./*" com.danwalkerdev.statement.App ~/Downloads/
