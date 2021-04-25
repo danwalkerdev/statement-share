@@ -5,16 +5,16 @@ import com.danwalkerdev.statement.messaging.MessageService;
 
 import javax.mail.*;
 import javax.mail.internet.*;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EmailMessageService implements MessageService {
 
     private final ConfigurationService service;
+    private final HtmlContentCreator contentCreator;
 
     public EmailMessageService(ConfigurationService service) {
         this.service = service;
+        this.contentCreator = new HtmlContentCreator();
     }
 
     @Override
@@ -26,21 +26,21 @@ public class EmailMessageService implements MessageService {
             }
         });
         try {
-            sendMessage(session, stream);
+            String content = contentCreator.make(stream);
+            sendMessage(session, content);
         } catch (MessagingException e) {
             throw new MessageException(e);
         }
     }
 
-    private <T> void sendMessage(Session session, Stream<T> stream) throws MessagingException {
+    private void sendMessage(Session session, String content) throws MessagingException {
         Message message = new MimeMessage(session);
+        message.setSubject("Test transactions");
         message.setFrom(service.from());
         message.setRecipient(Message.RecipientType.TO, service.to());
 
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(stream
-                .map(Objects::toString)
-                .collect(Collectors.joining("\\n")), "text/html");
+        mimeBodyPart.setContent(content, "text/html");
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(mimeBodyPart);
@@ -49,4 +49,5 @@ public class EmailMessageService implements MessageService {
 
         Transport.send(message);
     }
+
 }
