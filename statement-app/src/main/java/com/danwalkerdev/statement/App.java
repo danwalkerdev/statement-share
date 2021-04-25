@@ -6,8 +6,7 @@ import com.danwalkerdev.statement.messaging.MessagingUtil;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class App {
 
@@ -25,7 +24,7 @@ public class App {
         // parse all transactions from all providers
         new StatementUtil().providers().forEachRemaining(parserProvider -> transactions.addAll(new ParserHelper(parserProvider.getBankParser(), path).doParse()));
         // send transactions via all provided messaging services
-        new MessagingUtil().providers().forEachRemaining(messagingProvider -> messagingProvider.getService().send(transactions.stream()));
+        new MessagingUtil().providers().forEachRemaining(messagingProvider -> messagingProvider.getService().send(transactions.stream().map(Objects::toString)));
 
     }
 }

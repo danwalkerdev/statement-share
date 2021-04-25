@@ -18,7 +18,7 @@ public class EmailMessageService implements MessageService {
     }
 
     @Override
-    public <T> void send(Stream<T> stream) {
+    public void send(Stream<String> stream) {
         Session session = Session.getInstance(service.mailProperties(), new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {

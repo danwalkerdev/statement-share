@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 public class ConsoleMessageService implements MessageService {
 
     @Override
-    public <T> void send(Stream<T> stream) {
+    public void send(Stream<String> stream) {
         stream.forEach(System.out::println);
     }
 }
