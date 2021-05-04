@@ -8,6 +8,7 @@ public class Transaction {
     private String description;
     private double value;
     private String account;
+    private TransactionType type;
 
     public LocalDate getDate() {
         return date;
@@ -39,6 +40,14 @@ public class Transaction {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
     @Override
