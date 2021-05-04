@@ -1,5 +1,6 @@
 package com.danwalkerdev.statement.email;
 
+import com.danwalkerdev.statement.api.Transaction;
 import com.danwalkerdev.statement.messaging.MessageException;
 
 import java.io.*;
@@ -7,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.function.UnaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,7 +20,7 @@ class HtmlContentCreator {
     private static final String DATE = "\\{date}";
     private static final String BODY_CONTENT = "\\{list-content}";
 
-    String make(Stream<String> stream) {
+    String make(Stream<Transaction> stream) {
         String mainContent = stream
                 .map(makeListElement())
                 .collect(Collectors.joining());
@@ -44,7 +45,7 @@ class HtmlContentCreator {
                 .collect(Collectors.joining("\n"));
     }
 
-    private UnaryOperator<String> makeListElement() {
+    private Function<Transaction, String> makeListElement() {
         return contents -> "<li>" + contents + "</li>\n";
     }
 }
