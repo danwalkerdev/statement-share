@@ -1,5 +1,6 @@
 package com.danwalkerdev.statement.email;
 
+import com.danwalkerdev.statement.api.Transaction;
 import com.danwalkerdev.statement.messaging.MessageException;
 import com.danwalkerdev.statement.messaging.MessageService;
 
@@ -18,7 +19,7 @@ public class EmailMessageService implements MessageService {
     }
 
     @Override
-    public void send(Stream<String> stream) {
+    public void send(Stream<Transaction> stream) {
         Session session = Session.getInstance(service.mailProperties(), new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
