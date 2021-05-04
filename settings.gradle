@@ -6,4 +6,5 @@ include 'messaging-api'
 include 'email-messaging'
 include 'console-messaging'
 include 'natwest-ob'
+include 'file-sheet-messaging'
 

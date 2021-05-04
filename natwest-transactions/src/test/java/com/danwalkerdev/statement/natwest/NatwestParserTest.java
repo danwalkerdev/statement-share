@@ -1,5 +1,6 @@
 package com.danwalkerdev.statement.natwest;
 
+import com.danwalkerdev.statement.api.Transaction;
 import com.danwalkerdev.statement.exception.StatementException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +29,33 @@ class NatwestParserTest {
     void test_example_parse() throws StatementException {
         parser.parse(path);
     }
+
+    @Test
+    void description_leading_quote_is_removed() throws StatementException {
+        List<Transaction> transactions = parser.parse(path);
+        transactions.stream()
+                .map(Transaction::getDescription)
+                .forEach(description -> assertFalse(description.startsWith("'"), description + ": starts with a quote"));
+    }
+
+    @Test
+    void faster_payment_line_not_included() throws StatementException {
+        List<Transaction> transactions = parser.parse(path);
+        assertTrue(transactions.stream()
+                .map(Transaction::getType)
+                .map(NatwestType.class::cast)
+                .noneMatch(nt -> nt == NatwestType.PAYMENT));
+    }
+
+    @Test
+    void balance_line_not_included() throws StatementException {
+        List<Transaction> transactions = parser.parse(path);
+        assertTrue(transactions.stream()
+                .map(Transaction::getType)
+                .map(NatwestType.class::cast)
+                .noneMatch(nt -> nt == NatwestType.BALANCE));
+    }
+
 
     // use a new path/resource. Does work though
 //    @Test
