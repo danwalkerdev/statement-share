@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.stream.Stream;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,7 +19,7 @@ class HtmlContentCreatorTest {
         final String eggmen = "We are the egg men";
         final String walrus = "I am the Walrus";
         LocalDate date = LocalDate.of(2021, Month.MAY, 4);
-        String content = creator.make(Stream.of(
+        String content = creator.make(List.of(
                 makeTransaction(5.00, eggman, date),
                 makeTransaction(10.00, eggmen, date),
                 makeTransaction(15.00, walrus, date)));
