@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -16,17 +17,17 @@ public class FileSheetMessageService implements MessageService {
     private final TransactionWriter transactionWriter = new TransactionWriter();
 
     @Override
-    public void send(Stream<Transaction> transactionStream) {
+    public void send(Collection<Transaction> transactions) {
         Path path = configurationService.getOutputPath();
         try {
-            process(transactionStream, path);
+            process(transactions, path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    private void process(Stream<Transaction> transactionStream, Path path) throws IOException {
+    private void process(Collection<Transaction> transactions, Path path) throws IOException {
         if (Files.exists(path)) {
             Files.deleteIfExists(path);
         } else {
@@ -34,7 +35,7 @@ public class FileSheetMessageService implements MessageService {
         }
 
         try (var fos = Files.newOutputStream(path, StandardOpenOption.CREATE_NEW)) {
-            transactionStream
+            transactions.stream()
                     .map(transactionWriter::write)
                     .forEach(tryWrite(fos));
         }

@@ -6,6 +6,7 @@ import com.danwalkerdev.statement.messaging.MessageService;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.util.Collection;
 import java.util.stream.Stream;
 
 public class EmailMessageService implements MessageService {
@@ -19,7 +20,7 @@ public class EmailMessageService implements MessageService {
     }
 
     @Override
-    public void send(Stream<Transaction> stream) {
+    public void send(Collection<Transaction> transactions) {
         Session session = Session.getInstance(service.mailProperties(), new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -27,7 +28,7 @@ public class EmailMessageService implements MessageService {
             }
         });
         try {
-            String content = contentCreator.make(stream);
+            String content = contentCreator.make(transactions);
             sendMessage(session, content);
         } catch (MessagingException e) {
             throw new MessageException(e);
