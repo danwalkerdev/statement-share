@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class TransactionConverter {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM uuuu");
-    private static final int TRUNCATE_LIMIT = 24;
+    private static final int ELIDE_LIMIT = 24;
     private static final String ELLIPSIS = "...";
 
     Transaction mapTransaction(String[] parsedLine) {
@@ -33,7 +33,7 @@ public class TransactionConverter {
 
     private String processDescription(String string) {
         String noquote = stripLeadingQuote(string);
-        return truncate(noquote);
+        return string.length() > ELIDE_LIMIT ? elide(noquote) : noquote;
     }
 
     private String stripLeadingQuote(String string) {
@@ -41,12 +41,8 @@ public class TransactionConverter {
         return string;
     }
 
-    private String truncate(String string) {
-        if (string.length() > TRUNCATE_LIMIT) {
-            return string.substring(0, TRUNCATE_LIMIT - ELLIPSIS.length()) + ELLIPSIS;
-        } else {
-            return string;
-        }
+    private String elide(String string) {
+        return string.substring(0, ELIDE_LIMIT - ELLIPSIS.length()) + ELLIPSIS;
     }
 
 }
