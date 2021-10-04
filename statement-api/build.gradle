@@ -9,6 +9,14 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    apiJar {
+        canBeConsumed = true
+        canBeResolved = false
+        extendsFrom implementation, runtimeOnly
+    }
+}
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
@@ -16,4 +24,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+artifacts {
+    apiJar(jar)
 }

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'statement-share.fat-jar'
 }
 
 group 'com.danwalkerdev'
@@ -10,17 +11,10 @@ repositories {
 }
 
 dependencies {
-    implementation project(':messaging-api')
+    implementation project(path: ':messaging-api', configuration: 'apiJar')
     implementation 'javax.mail:mail:1.5.0-b01'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
-
-jar {
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    duplicatesStrategy = "EXCLUDE"
 }
 
 test {
