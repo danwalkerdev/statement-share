@@ -1,5 +1,5 @@
 plugins {
-    id 'java-library'
+    id 'java'
     id 'statement-share.fat-jar'
 }
 
@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    api project(':statement-api')
+    implementation project(':statement-api')
     implementation 'com.opencsv:opencsv:5.4'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
