@@ -21,6 +21,6 @@ public enum NatwestType implements TransactionType {
         return Arrays.stream(NatwestType.values())
                 .filter(nt -> nt.description.equals(description))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("Cannot parse " + description));
     }
 }

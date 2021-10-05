@@ -4,11 +4,12 @@ import com.danwalkerdev.statement.api.Transaction;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class TransactionConverter {
 
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM uuuu");
-    private static final int ELIDE_LIMIT = 24;
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM uuuu", Locale.US);
+    private static final int ELIDE_LIMIT = 32;
     private static final String ELLIPSIS = "...";
 
     Transaction mapTransaction(String[] parsedLine) {

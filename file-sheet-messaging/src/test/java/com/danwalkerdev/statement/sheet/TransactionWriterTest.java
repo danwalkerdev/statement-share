@@ -20,7 +20,7 @@ class TransactionWriterTest {
 
         String result = writer.write(t);
 
-        assertEquals("5.00\teggs\t04/05" + LINE_SEPARATOR, result);
+        assertEquals("04/05\t5.00\teggs" + LINE_SEPARATOR, result);
     }
 
     private Transaction makeTransaction(double amount, String description, LocalDate date) {
