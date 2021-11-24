@@ -4,6 +4,7 @@ import com.danwalkerdev.statement.api.Transaction;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 public class TransactionConverter {
@@ -11,6 +12,7 @@ public class TransactionConverter {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM uuuu", Locale.US);
     private static final int ELIDE_LIMIT = 32;
     private static final String ELLIPSIS = "...";
+    private static final List<NatwestType> MAPPABLE_TYPES = List.of(NatwestType.PURCHASE, NatwestType.REFUND, NatwestType.FEE);
 
     Transaction mapTransaction(String[] parsedLine) {
         if (shouldNotBeMapped(parsedLine)) return null;
@@ -29,7 +31,7 @@ public class TransactionConverter {
     }
 
     private boolean isMappable(NatwestType natwestType) {
-        return natwestType == NatwestType.PURCHASE || natwestType == NatwestType.REFUND;
+        return MAPPABLE_TYPES.contains(natwestType);
     }
 
     private String processDescription(String string) {

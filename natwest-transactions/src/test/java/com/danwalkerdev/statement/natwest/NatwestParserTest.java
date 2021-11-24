@@ -56,6 +56,20 @@ class NatwestParserTest {
                 .noneMatch(nt -> nt == NatwestType.BALANCE));
     }
 
+    @Test
+    void mappable_transactions_are_mapped() throws StatementException {
+        List<Transaction> transactions = parser.parse(path);
+        assertEquals(4, transactions.size());
+        assertEquals(1, transactions.stream()
+                .map(Transaction::getType)
+                .filter(NatwestType.FEE::equals)
+                .count());
+        assertEquals(3, transactions.stream()
+                .map(Transaction::getType)
+                .filter(NatwestType.PURCHASE::equals)
+                .count());
+    }
+
 
     // use a new path/resource. Does work though
 //    @Test

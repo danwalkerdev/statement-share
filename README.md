@@ -9,7 +9,7 @@ Run `./gradlew clean build` to build and test the project. Fetch the jars you
 need for your use case, place them in a directory and in the same location 
 execute
 
-    java -jar -cp ./* com.danwalkerdev.statement.App <input>`
+    java -cp "./*" com.danwalkerdev.statement.App <input>
 
 where `input` is either a file or folder containing the files you wish to
 parse.

@@ -9,6 +9,7 @@ public enum NatwestType implements TransactionType {
     PURCHASE("Purchase"),
     REFUND("Refund"),
     PAYMENT("Payment"),
+    FEE("Fee"),
     BALANCE("");
 
     private final String description;
